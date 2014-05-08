@@ -1,0 +1,26 @@
+{% extends "MainBundle:Layout:layout.html.twig" %}
+
+{% block title %} {{ titre ~ ' - ' ~ parent() }} {% endblock %}
+
+{% block contenu %}
+    <h2>{{ titre }}</h2>
+    <div id="formulaireAjoutJeu">
+        {{ form_start(oForm, {'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+        {{ form_row(oForm.supportRegion) }}
+        {{ form_row(oForm.nom) }}
+        {{ form_row(oForm.prixAchat) }} {{ form_row(oForm.devise) }}
+        {{ form_row(oForm.codeBarre) }}
+        {{ form_row(oForm.boite) }}
+        {{ form_row(oForm.notice) }}
+        {{ form_row(oForm.jeu) }}
+        {{ form_row(oForm.pointVIP) }}
+        {{ form_row(oForm.image) }}
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <input type="submit" value="Valider" class="btn btn-primary" id="btnValiderModifAjoutTest"/>
+                <a href="#" class="btn btn-danger" role="button">Annuler</a>
+            </div>
+        </div>
+        {{ form_end(oForm) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    role_hierarchy:
+        ROLE_MEMBRE:     ROLE_MEMBRE
+        ROLE_ADMIN:   [ROLE_MEMBRE, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login_firewall:
+            pattern:    ^/connexion$
+            anonymous:  true
+
+        main:
+            pattern: ^/
+            form_login:
+                provider:                       fos_userbundle
+                csrf_provider:                  form.csrf_provider
+                login_path:                     /connexion
+                check_path:                     /verifie_login
+            logout:
+                path:   /deconnexion
+                target: /
+            anonymous:  true
+
+    access_control:
+        - { path: ^/connexion$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connected/ajout-jeu$, role: ROLE_MEMBRE }
+        - { path: ^/connected/admin/ajout-support$, role: ROLE_ADMIN }

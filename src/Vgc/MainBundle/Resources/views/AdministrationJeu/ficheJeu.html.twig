@@ -1,0 +1,47 @@
+{% extends "MainBundle:Layout:layout.html.twig" %}
+
+{% block title %}{{ oJeu.nom }} - {{ parent() }}{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+{% endblock %}
+
+{% block contenu %}
+    <div>
+        <p>{{ oJeu.nom }}</p>
+        <p>{{ oJeu.prixAchat }}{{ oJeu.devise }}</p>
+        <p>{{ oJeu.codebarre }}</p>
+        <p>notice :
+            {% if oJeu.notice %}
+                oui
+            {% else %}
+                non
+            {% endif %}
+        </p>
+        <p>boîte :
+            {% if oJeu.boite %}
+                oui
+            {% else %}
+                non
+            {% endif %}
+        </p>
+        <p>jeu :
+            {% if oJeu.jeu %}
+                oui
+            {% else %}
+                non
+            {% endif %}
+        </p>
+        <p>point VIP :
+            {% if oJeu.pointVip %}
+                oui
+            {% else %}
+                non
+            {% endif %}
+        </p>
+    </div>
+    <div>
+        {{ oJeu.image }}
+        <img src="{{ oJeu.image }}"/>
+    </div>
+{% endblock %}

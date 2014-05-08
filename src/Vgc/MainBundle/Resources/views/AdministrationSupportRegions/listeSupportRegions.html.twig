@@ -1,0 +1,60 @@
+{% extends "MainBundle:Layout:layout.html.twig" %}
+
+{% block title %}Liste des fullsets - {{ parent() }}{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    {#    <script type="text/javascript" src="{{ asset('js/listeTheme.js') }}"></script>#}
+{% endblock %}
+
+{% block contenu %}
+    <table class="table table-bordered" id="listeSupports">
+        <thead>
+            <tr>
+                <th class="col-sm-4">Support</th>
+                <th class="col-sm-4">Fullset</th>
+                <th class="col-sm-4">Region</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set i = 0 %}
+                {% for oSupportRegion in toSupportRegion %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('supportRegionCollection', {'id': app.user.collection.id, 'supportRegion': oSupportRegion }) }}">{{ oSupportRegion.support.nom }}</a>
+                        </td>
+                        <td>
+                            {{ toCollectionFullset[i] }}/{{ oSupportRegion.fullset }}
+                            {% set i = i + 1 %}
+                            </td>
+                            <td>
+                                {{ oSupportRegion.region.nom }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if app.user and (app.user.estAdministrateur()) %}
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <a href="{{ path('AjoutSupportRegion') }}" type="button" id="btnAjouterSupportRegion" class="btn btn-primary">Ajouter un Support Region</a>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="{{ path('AjoutSupport') }}" type="button" id="btnAjouterSupport" class="btn btn-primary">Ajouter un Support</a>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="{{ path('AjoutRegion') }}" type="button" id="btnAjouterRegion" class="btn btn-primary">Ajouter une Region</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {#    <a href="{{ path('modifAjoutSupport', {'id': -1}) }}" type="button" id="btnAjouterTheme" class="btn btn-primary">Ajouter un nouveau thème</a>#}
+
+
+                    {# Modal #}
+                    {#    <div class="modal fade" id="modalConfirmationSuppressionTheme" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                </div>
+                            </div>
+                        </div>#}
+                    {% endblock %}

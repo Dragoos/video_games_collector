@@ -1,0 +1,71 @@
+{% extends "MainBundle:Layout:layout.html.twig" %}
+
+{% block title %} Ma collection - {{ parent() }}{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+{% endblock %}
+
+{% block contenu %}
+    <table class="table table-bordered" id="listeSupports">
+        <thead>
+            <tr>
+                <th class="col-sm-4">Titre</th>
+                <th class="col-sm-4">Possédé</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for oJeu in toJeu %}
+                {% if oJeu.collection == collection %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('ficheJeu', {id: oJeu.id}) }}">{{ oJeu.nom }}</a>
+                        </td>
+                        <td>
+                            {% if oJeu.jeu == true %}
+                                Jeu présent,
+                            {% elseif oJeu.jeu == false %}
+                                Jeu manquant,
+                            {% endif %}
+                            {% if oJeu.boite == true %}
+                                boîte présente,
+                            {% elseif oJeu.boite == false %}
+                                boîte manquante,
+                            {% endif %}
+                            {% if oJeu.notice == true %}
+                                notice présente,
+                            {% elseif oJeu.notice == false %}
+                                notice manquante,
+                            {% endif %}
+                            {% if oJeu.pointVip == true %}
+                                point VIP présent.
+                            {% elseif oJeu.pointVip == false %}
+                                point VIP manquant.
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>
+                            {{ oJeu.nom }}
+                        </td>
+                        <td>
+                            Rien
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    {#    <a href="{{ path('modifAjoutSupport', {'id': -1}) }}" type="button" id="btnAjouterTheme" class="btn btn-primary">Ajouter un nouveau thème</a>#}
+
+
+    {# Modal #}
+    {#    <div class="modal fade" id="modalConfirmationSuppressionTheme" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                </div>
+            </div>
+        </div>#}
+{% endblock %}

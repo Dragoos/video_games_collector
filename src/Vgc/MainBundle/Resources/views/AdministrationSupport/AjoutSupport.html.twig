@@ -1,0 +1,39 @@
+{% extends "MainBundle:Layout:layout.html.twig" %}
+
+{% block title %}Liste des fullsets - {{ parent() }}{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    {#    <script type="text/javascript" src="{{ asset('js/listeTheme.js') }}"></script>#}
+{% endblock %}
+
+{% block contenu %}
+    <table class="table table-bordered" id="listeSupports">
+        <thead>
+            <tr>
+                <th class="col-sm-4">Support</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for oSupport in toSupport %}
+                <tr>
+                    <td>
+                        {{ oSupport.nom }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2>{{ titre }}</h2>
+    <div id="formulaireAjoutSupport">
+        {{ form_start(oForm, {'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+        {{ form_row(oForm.nom) }}
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <input type="submit" value="Valider" class="btn btn-primary" id="btnValiderModifAjoutSupportRegion"/>
+                <a href="{{ path('supportRegions') }}" class="btn btn-danger" role="button">Annuler</a>
+            </div>
+        </div>
+        {{ form_end(oForm) }}
+    </div>
+{% endblock %}

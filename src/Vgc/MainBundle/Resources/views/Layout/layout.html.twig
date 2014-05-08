@@ -1,0 +1,77 @@
+{% import _self as self %}
+
+<!DOCTYPE html>
+{% spaceless %}
+    <html>
+        <head>
+            <meta charset="utf-8">
+
+            <title>{% block title %}Video Games Collector{% endblock %}</title>
+
+            {% block css %}
+                <link href="{{ asset('bootstrap/css/bootstrap.css') }}" media="all" rel="stylesheet" type="text/css" />
+                <link href="{{ asset('css/main.css') }}" media="all" rel="stylesheet" type="text/css" />
+            {% endblock %}
+
+            {% block js %}
+                <script src="{{ asset('js/jquery-1.11.0.min.js') }}"></script>
+                <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+                <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+                <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            {% endblock %}
+        </head>
+        <body>
+            <div id="body" class="container">
+                {% block body %}
+                    <div id="banniere">
+                        {% block banniere %}
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <img src="{{ asset('images/header.png') }}" alt="bannière Video-games-collector"{# height="200" width="200"#}/>
+                                </div>
+                                <div class="col-md-2">
+                                    {% if app.user and (app.user.estAdministrateur() or app.user.estMembre()) %}
+                                        <p>
+                                            {{ app.user.username }}
+                                        </p>
+                                        <p>
+                                            {{ app.user.status }}
+                                        </p>
+                                        <a href="{{ path('deconnexion') }}" id="deconnexion"> Se deconnecter </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endblock %}
+                    </div>
+                    <div id="contenu">
+                        {% block menu %}
+                            {% if app.user and (app.user.estAdministrateur() or app.user.estMembre()) %}
+                                <ul class="nav nav-pills nav-justified" id="navBarFormateur">
+                                    {{ self.menuItem(path('accueil'), 'Accueil') }}
+                                    {{ self.menuItem(path('supportRegions'), 'Ma collection') }}
+                                    {{ self.menuItem(path('AjoutJeu'), 'Ajouter un jeu') }}
+                                    {{ self.menuItem('#', 'Ajouter une console') }}
+                                </ul>
+                            {% else %}
+                                <ul class="nav nav-pills nav-justified" id="navBarFormateur">
+                                    {{ self.menuItem(path('connexion'), 'Se connecter') }}
+                                    {{ self.menuItem('#', 'Créer un compte') }}
+                                </ul>
+                            {% endif %}
+                        {% endblock %}
+                        {% block contenu %}
+                        {% endblock %}
+                    </div>
+                    <div id="footer">
+                        {% block footer %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </div>
+        </body>
+    </html>
+{% endspaceless %}
+
+{% macro menuItem(url, libelle) %}
+    <li class="{% if url == path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}active{% endif %}"><a href="{{ url }}">{{ libelle }}</a></li>
+    {% endmacro %}
